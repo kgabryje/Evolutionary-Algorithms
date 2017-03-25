@@ -12,6 +12,13 @@ def jacobian(x, a, b):
     return numpy.array([dx, dy])
 
 
+def hess(x, a, b):
+    dxx = 2 * (600 * a**2 - 1200*a*x[0] + 200*b + 600 * x[0]**2 - 200 * x[1] + 1)
+    dxy = 400 * (a - x[0])
+    dyy = 200
+    return numpy.array([[dxx, dxy], [dxy, dyy]])
+
+
 def get_params():
     return int(4 * numpy.random.uniform(-1, 2)) / 2, int(4 * numpy.random.uniform(-1, 2)) / 2
 
@@ -34,7 +41,7 @@ def powell(x0, a, b):
 
 def newton(x0, a, b):
     print('Newton optimization: ')
-    print(minimize(rosenbrock, x0=x0, args=(a, b), method='Newton-CG', jac=jacobian))
+    print(minimize(rosenbrock, x0=x0, args=(a, b), method='Newton-CG', jac=jacobian, hess=hess))
     print()
 
 
@@ -44,23 +51,17 @@ def cg(x0, a, b):
     print()
 
 
-def fmin_optim(x0, a, b):
-    print('fmin optimization: ')
-    print(fmin(rosenbrock, x0=x0, args=(a, b)))
-    print()
-
-
 def main():
     a, b = get_params()
     start_point = get_start_point(a, b)
     print("Parameters: a = {0}  b = {1}".format(a, b))
-    print("Start point: x = {0}  y = {1}".format(start_point[0], start_point[1]))
+    print("Start point: x = {0}  y = {1}\n".format(start_point[0], start_point[1]))
 
     nelder_mead(start_point, a, b)
     powell(start_point, a, b)
     newton(start_point, a, b)
     cg(start_point, a, b)
 
+
 if __name__ == "__main__":
     main()
-    # x = numpy.array([1, 2])
