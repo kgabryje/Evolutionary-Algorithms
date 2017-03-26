@@ -1,0 +1,33 @@
+\chapter{Opis funkcji}
+Parametry wygenerowano przy pomocy wzoru:
+\begin{equation}
+Int[4*rand()]/2
+\end{equation}
+gdzie $rand()$ to generator liczb losowych z rozkładem równomiernym z zakresu $<-1,1>$.
+Wylosowane parametry mają wartości: $a=-1,5$ oraz $b=-1$. Funkcja Rosenbrocka ma zatem postać:
+\begin{equation}
+\begin{split}
+f(x)=(1-x-1,5)^2+100*(y+1-(x+1,5)^2)^2
+\end{split}
+\end{equation}
+Punkty startowe generowane były przy pomocy wzoru:
+\begin{equation}
+\begin{split}
+x=a+2*rand() \\
+y=b+2*rand()
+\end{split}
+\end{equation}
+Wylosowane punktów mają następujące wartości:
+\begin{itemize}
+  \item $x=-1,12131$, $y=-0,23678$
+  \item $x=-2,60771$, $y=-0,38339$
+  \item $x=0,31282$, $y=-0,01969$
+  \item $x=-2,97363$, $y=-2,46108$
+\end{itemize}
+Funkcja Rosenbrocka o podanych parametrach przedstawiona jest na wykresie konturowym \ref{fig:rosenbrock}.
+\begin{figure}
+  \centering
+  \includesvg{rosenbrock}
+  \caption{Wykres funkcji Rosenbrocka o parametrach $a=-1.5$ i $b=-1$}
+  \label{fig:rosenbrock}
+\end{figure}

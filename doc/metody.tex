@@ -1,0 +1,137 @@
+\chapter{Metody optymalizacji}
+W celu znalezienia minimum funkcji Rosenbrocka użyto czterech algorytmów optymalizacji: Neldera-Meada, Powella, gradientów sprzężonych oraz Newtona. Wyniki symulacji opisane zostały w kolejnych podrozdziałach.
+
+\section{Metoda Neldera-Meada}
+Metoda Neldera-Meada dla każdego punktu startowego zminimalizowała funkcję Rosenbrocka z precyzją rzędu $10^{-10}$, co jest zadowalającym wynikiem. Algorytm ten jest jednak wolniejszy od pozostałych porównywanych metod. Dla punktu startowego $(-2,60771, -0,38339)$ potrzebował aż 95 iteracji, aby znaleźć minimum.
+
+Wyniki symulacji przedstawiają wykresy \ref{fig:nelder-mead_0}, \ref{fig:nelder-mead_1}, \ref{fig:nelder-mead_2} oraz \ref{fig:nelder-mead_3}.
+
+\begin{figure}
+  \centering
+  \includesvg{nelder-mead_0}
+  \caption{Optymalizacja metodą Neldera-Meada dla punktu startowego $x=-1,12131$, $y=-0,23678$}
+  \label{fig:nelder-mead_0}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includesvg{nelder-mead_1}
+  \caption{Optymalizacja metodą Neldera-Meada dla punktu startowego $x=-2,60771$, $y=-0,38339$}
+  \label{fig:nelder-mead_1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includesvg{nelder-mead_2}
+  \caption{Optymalizacja metodą Neldera-Meada dla punktu startowego $x=0,31282$, $y=-0,01969$}
+  \label{fig:nelder-mead_2}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includesvg{nelder-mead_3}
+  \caption{Optymalizacja metodą Neldera-Meada dla punktu startowego $x=-2,97363$, $y=-2,46108$}
+  \label{fig:nelder-mead_3}
+\end{figure}
+
+
+\section{Metoda Powella}
+Metoda Powella potrzebowała mniej iteracji od metody Neldera-Meada, osiągając na ogół precyzję rzędu nawet $10^{-30}$. Dla punktu startowego $(-2,60771, -0,38339)$ okazała się nieskuteczna, przekraczając limit ewaluacji funkcji. Mimo niepowodzenia, algorytm zminimalizował funkcję Rosenbrocka z tolerancją rzędu $10^{-6}$, co jest akceptowalnym wynikiem. Poza wspomnianym przypadkiem, w którym metoda zawiodła, do optymalizacji wymagane jest w najgorszym przypadku zaledwie 14 iteracji. Można zatem stwierdzić, że algorytm Powella jest najszybszym spośród testowanych.
+
+Wyniki symulacji przedstawiają wykresy \ref{fig:powell_0}, \ref{fig:powell_1}, \ref{fig:powell_2} oraz \ref{fig:powell_3}.
+
+\begin{figure}
+  \centering
+  \includesvg{powell_0}
+  \caption{Optymalizacja metodą Powella dla punktu startowego $x=-1,12131$, $y=-0,23678$}
+  \label{fig:powell_0}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includesvg{powell_1}
+  \caption{Optymalizacja metodą Powella dla punktu startowego $x=-2,60771$, $y=-0,38339$}
+  \label{fig:powell_1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includesvg{powell_2}
+  \caption{Optymalizacja metodą Powella dla punktu startowego $x=0,31282$, $y=-0,01969$}
+  \label{fig:powell_2}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includesvg{powell_3}
+  \caption{Optymalizacja metodą Powella dla punktu startowego $x=-2,97363$, $y=-2,46108$}
+  \label{fig:powell_3}
+\end{figure}
+
+
+\section{Metoda gradientów sprzężonych}
+Dla punktów $(0,31282, -0,01969)$ i $(-2,97363, -2,46108)$ metoda gradientów sprzężonych była nieskuteczna, kończąc swoje działanie już po kilku iteracjach. W pozostałych dwóch przypadkach algorytm znajdował minimum funkcji Rosenbrocka z precyzją rzędu $10^{-12}$, do czego potrzebował około 20 iteracji. Można zatem stwierdzić, że metoda gradientów sprzężonych jest szybka, ale powodzenie jej działania zależy od wyboru punktu początkowego. 
+
+Wyniki symulacji przedstawiają wykresy \ref{fig:cg_0}, \ref{fig:cg_1}, \ref{fig:cg_2} oraz \ref{fig:cg_3}.
+
+\begin{figure}
+  \centering
+  \includesvg{cg_0}
+  \caption{Optymalizacja metodą gradientów sprzężonych dla punktu startowego $x=-1,12131$, $y=-0,23678$}
+  \label{fig:cg_0}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includesvg{cg_1}
+  \caption{Optymalizacja metodą gradientów sprzężonych dla punktu startowego $x=-2,60771$, $y=-0,38339$}
+  \label{fig:cg_1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includesvg{cg_2}
+  \caption{Optymalizacja metodą gradientów sprzężonych dla punktu startowego $x=0,31282$, $y=-0,01969$}
+  \label{fig:cg_2}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includesvg{cg_3}
+  \caption{Optymalizacja metodą gradientów sprzężonych dla punktu startowego $x=-2,97363$, $y=-2,46108$}
+  \label{fig:cg_3}
+\end{figure}
+
+
+\section{Metoda Newtona}
+Metoda Newtona dla każdego punktu startowego zminimalizowała funkcję Rosenbrocka z precyzją rzędu $10^{-11}$, co jest podobnym rezultatem do osiągniętego przez metodę Neldera-Meada. Algorytm Newtona jest jednak szybszy, potrzebując w najgorszym przypadku 47 iteracji do osiągnięcia zadowalającej tolerancji. Można również stwierdzić, że metoda Newtona jest lepsza od metody gradientów sprzężonych ze względu na jej niezawodność. 
+
+Wyniki symulacji przedstawiają wykresy \ref{fig:newton_0}, \ref{fig:newton_1}, \ref{fig:newton_2} oraz \ref{fig:newton_3}.
+
+\begin{figure}
+  \centering
+  \includesvg{newton_0}
+  \caption{Optymalizacja metodą Newtona dla punktu startowego $x=-1,12131$, $y=-0,23678$}
+  \label{fig:newton_0}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includesvg{newton_1}
+  \caption{Optymalizacja metodą Newtona dla punktu startowego $x=-2,60771$, $y=-0,38339$}
+  \label{fig:newton_1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includesvg{newton_2}
+  \caption{Optymalizacja metodą Newtona dla punktu startowego $x=0,31282$, $y=-0,01969$}
+  \label{fig:newton_2}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includesvg{newton_3}
+  \caption{Optymalizacja metodą Newtona dla punktu startowego $x=-2,97363$, $y=-2,46108$}
+  \label{fig:newton_3}
+\end{figure}

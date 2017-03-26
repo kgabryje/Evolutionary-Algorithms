@@ -1,0 +1,27 @@
+\chapter{Statystyki}
+Tabela \ref{stats} przedstawia porównanie metod optymalizacji dla czterech losowych punktów startowych.
+\begin{table}[]
+\centering
+\caption{Porównanie metod optymalizacji}
+\label{stats}
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Punkt startowy                         & Metoda                 & Punkt końcowy         & Dokładność                  & Liczba iteracji \\ \hline
+\multirow{4}{*}{\makecell{$x=-1,12131$ \\ $y=-0,23678$}} & Neldera-Meada          & \makecell{$x=-0,50003$ \\ $y=-0,00005$} & $8,03722^{-10}$ & $67$           \\ \cline{2-5} 
+                                       & Powella                & \makecell{$x=-0,50000$ \\ $y=0,00000$}  & 0                           & $9$               \\ \cline{2-5} 
+                                       & Gradientów sprzężonych & \makecell{$x=-0,50000$ \\ $y=0,00000$}  & $2,52116^{-11}$ & $28$              \\ \cline{2-5} 
+                                       & Newtona                & \makecell{$x=-0,50000$ \\ $y=0,00000$}  & $2,22805^{-13}$ & $24$              \\ \hline
+\multirow{4}{*}{\makecell{$x=-2,60771$ \\ $y=-0,38339$}} & Neldera-Meada          & \makecell{$x=-0,50002$ \\ $y=-0,00004$} & $6,47764^{-10}$ & $97$              \\ \cline{2-5} 
+                                       & Powella                & \makecell{$x=-0,50000$ \\ $y=0,00000$}  & $1,04149^{-27}$ & $10$              \\ \cline{2-5} 
+                                       & Gradientów sprzężonych & \makecell{$x=-0,50000$ \\ $y=0,00000$}  & $8,96869^{-13}$ & $26$              \\ \cline{2-5} 
+                                       & Newtona                & \makecell{$x=-0,50001$ \\ $y=-0,00001$} & $4,68967^{-11}$ & $48$           \\ \hline
+\multirow{4}{*}{\makecell{$x=0,31282$ \\ $y=-0,01969$}}  & Neldera-Meada          & \makecell{$x=-0,50001$ \\ $y=-0,00001$} & $3,33663^{-10}$ & $54$              \\ \cline{2-5} 
+                                       & Powella                & \makecell{$x=-0,50031$ \\ $y=0,00088$}  & $6,95587^{-6}$  & $74$              \\ \cline{2-5} 
+                                       & Gradientów sprzężonych & \multicolumn{3}{c|}{Niepowodzenie}                                    \\ \cline{2-5} 
+                                       & Newtona                & \makecell{$x=-0,50000$ \\ $y=0,00000$}  & $4,12421^{-12}$ & $10$              \\ \hline
+\multirow{4}{*}{\makecell{$x=-2,97363$ \\ $y=-2,46108$}} & Neldera-Meada          & \makecell{$x=-0,50000$ \\ $y=0,00001$}  & $1,75344^{-9}$  & $78$              \\ \cline{2-5} 
+                                       & Powella                & \makecell{$x=-0,50000$ \\ $y=0,00000$}  & $5,71924^{-30}$ & $14$              \\ \cline{2-5} 
+                                       & Gradientów sprzężonych & \multicolumn{3}{c|}{Niepowodzenie}                                    \\ \cline{2-5} 
+                                       & Newtona                & \makecell{$x=-0,50003$ \\ $y=0,00006$}  & $5,98328^{-13}$ & $37$              \\ \hline
+\end{tabular}
+\end{table}
