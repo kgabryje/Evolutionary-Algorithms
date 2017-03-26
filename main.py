@@ -1,12 +1,11 @@
 import sys
+import numpy as np
+from scipy.optimize import minimize
 import matplotlib
 if sys.platform == 'linux':
     matplotlib.use('TkAgg')
-
-import numpy as np
-from scipy.optimize import minimize
 import matplotlib.pyplot as plt
-import math
+from matplotlib.ticker import MaxNLocator
 
 
 def rosenbrock(x, a, b):
@@ -67,20 +66,21 @@ def cg(x0, a, b):
     return np.transpose(callback)
 
 
-def plot_optim(res, params, start_point, method_name):
+def plot_optim(fun, params, start_point, method_name, filename):
+    res = fun(start_point, *params)
     x = np.arange(res[0, -1] - 4, res[0, -1] + 2, 0.05)
     y = np.arange(res[1, -1] - 4, res[1, -1] + 2, 0.05)
     x, y = np.meshgrid(x, y)
     r = rosenbrock((x, y), *params)
     levels = np.arange(-100.0, 2000, 1.0)
 
-    fig = plt.figure()
-    fig.suptitle(method_name)
+    fig = plt.figure().gca()
+    # fig.suptitle(method_name)
     plt.subplot(211)
     plt.xlabel('x')
     plt.ylabel('y')
     plt.contour(x, y, r, levels=levels)
-    plt.text(x[0, 0] + 0.3, y[0, 0] + 0.3, 'Punkt startowy: ({:.5f}, {:.5f})\nPunkt optymalny: ({:.5f}, {:.5f})'
+    plt.text(x[0, 0] + 0.3, y[0, 0] + 0.3, 'Punkt startowy: ({:.5f}, {:.5f})\nPunkt końcowy: ({:.5f}, {:.5f})'
              .format(*(np.append(start_point, res[:, -1]))))
     plt.plot(res[0], res[1], color='r', label='Przebieg optymalizacji')
     plt.legend(loc='best')
@@ -89,31 +89,24 @@ def plot_optim(res, params, start_point, method_name):
     plt.xlabel('iter')
     plt.ylabel('log(rosenbrock(iter))')
     plt.semilogy(rosenbrock(res, *params))
-    # plt.semilogy(res[1])
+    fig.xaxis.set_major_locator(MaxNLocator(integer=True))
+    plt.savefig('doc/wykresy/' + filename + '.svg', format='svg', dpi=1200)
 
 
 def main():
     params = get_params()
     print("Parameters: a = {0}  b = {1}".format(*params))
     plt.ion()
+
     for i in range(4):
         start_point = get_start_point(*params)
         print("Start point: x = {}  y = {}\n".format(start_point[0], start_point[1]))
+        plot_optim(nelder_mead, params, start_point, 'Metoda Neldera-Meada', 'nelder-mead_' + str(i))
+        plot_optim(powell, params, start_point, 'Metoda Powella', 'powell_' + str(i))
+        plot_optim(cg, params, start_point, 'Metoda gradientów sprzężonych', 'cg_' + str(i))
+        plot_optim(newton, params, start_point, 'Metoda Newtona', 'newton_' + str(i))
+    # plt.show(block=True)
 
-        res = nelder_mead(start_point, *params)
-        plot_optim(res, params, start_point, 'Metoda Neldera-Meada')
-
-        res = powell(start_point, *params)
-        # plot_optim(res, params, start_point, 'Metoda Powella')
-
-        res = newton(start_point, *params)
-        # plot_optim(res, params, start_point, 'Metoda Newtona')
-
-        res = cg(start_point, *params)
-        # plot_optim(res, params, start_point, 'Metoda gradientów sprzężonych')
-    plt.savefig('chuj.svg', format='svg', dpi=1200)
-    plt.savefig('chuj2.svg', format='svg', dpi=plt.gcf().dpi)
-    plt.show(block=True)
 
 if __name__ == "__main__":
     main()
