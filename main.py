@@ -35,49 +35,48 @@ def get_start_point(a, b):
 
 
 def nelder_mead(x0, a, b):
-    callback = []
+    callback = [x0]
     print('Nelder-Mead optimization: ')
     optim = minimize(rosenbrock, x0=x0, args=(a, b), method='Nelder-Mead', callback=callback.append)
     print(str(optim) + '\n')
-    return callback
+    return np.transpose(callback)
 
 
 def powell(x0, a, b):
-    callback = []
+    callback = [x0]
     print('Powell optimization: ')
     optim = minimize(rosenbrock, x0=x0, args=(a, b), method='Powell', callback=callback.append)
     print(str(optim) + '\n')
-    return callback
+    return np.transpose(callback)
 
 
 def newton(x0, a, b):
-    callback = []
+    callback = [x0]
     print('Newton optimization: ')
     optim = minimize(rosenbrock, x0=x0, args=(a, b), method='Newton-CG', jac=jacobian, hess=hess,
                      callback=callback.append)
     print(str(optim) + '\n')
-    return callback
+    return np.transpose(callback)
 
 
 def cg(x0, a, b):
-    callback = []
+    callback = [x0]
     print('CG optimization: ')
     optim = minimize(rosenbrock, x0=x0, args=(a, b), method='CG', jac=jacobian, callback=callback.append)
     print(str(optim) + '\n')
-    return callback
+    return np.transpose(callback)
 
 
 def plot_optim(res, params, start_point, method_name):
-    # x = np.arange(abs(params[0]) + abs(start_point[0]) - 2, abs(params[0]) + abs(start_point[0]) + 2, 0.05)
-    # y = np.arange(abs(params[1]) + abs(start_point[1]) - 2, abs(params[1]) + abs(start_point[1]) + 2, 0.05)
-    x = np.arange(min(params[0], start_point[0]) - 2, max(params[0], start_point[0]) + 2, 0.05)
-    y = np.arange(min(params[1], start_point[1]) - 2, max(params[1], start_point[1]) + 2, 0.05)
+    x = np.arange(res[0, -1] - 4, res[0, -1] + 2, 0.05)
+    y = np.arange(res[1, -1] - 4, res[1, -1] + 2, 0.05)
     x, y = np.meshgrid(x, y)
     r = rosenbrock((x, y), *params)
-    levels = np.arange(-100.0, 1000, 1.0)
+    levels = np.arange(-100.0, 2000, 1.0)
 
     fig = plt.figure()
     fig.suptitle(method_name)
+    plt.subplot(211)
     plt.xlabel('x')
     plt.ylabel('y')
     plt.contour(x, y, r, levels=levels)
@@ -86,6 +85,12 @@ def plot_optim(res, params, start_point, method_name):
     plt.plot(res[0], res[1], color='r', label='Przebieg optymalizacji')
     plt.legend(loc='best')
 
+    plt.subplot(212)
+    plt.xlabel('iter')
+    plt.ylabel('log(rosenbrock(iter))')
+    plt.semilogy(rosenbrock(res, *params))
+    # plt.semilogy(res[1])
+
 
 def main():
     params = get_params()
@@ -93,15 +98,22 @@ def main():
     plt.ion()
     for i in range(4):
         start_point = get_start_point(*params)
-        print("Start point: x = {0}  y = {1}\n".format(start_point[0], start_point[1]))
+        print("Start point: x = {}  y = {}\n".format(start_point[0], start_point[1]))
 
         res = nelder_mead(start_point, *params)
-        powell(start_point, *params)
-        newton(start_point, *params)
-        cg(start_point, *params)
-        res = np.transpose(res)
-
         plot_optim(res, params, start_point, 'Metoda Neldera-Meada')
+
+        res = powell(start_point, *params)
+        # plot_optim(res, params, start_point, 'Metoda Powella')
+
+        res = newton(start_point, *params)
+        # plot_optim(res, params, start_point, 'Metoda Newtona')
+
+        res = cg(start_point, *params)
+        # plot_optim(res, params, start_point, 'Metoda gradientów sprzężonych')
+    plt.savefig('chuj.svg', format='svg', dpi=1200)
+    plt.savefig('chuj2.svg', format='svg', dpi=plt.gcf().dpi)
     plt.show(block=True)
+
 if __name__ == "__main__":
     main()
