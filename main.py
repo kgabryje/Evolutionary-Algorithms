@@ -13,7 +13,7 @@ def rosenbrock(x, a, b):
 
 
 def jacobian(x, a, b):
-    dx = 2 * (-200 * (a - x[0]) * (a**2 - 2*a*x[0] +b + x[0]**2 - x[1]) - a + x[0] - 1)
+    dx = 2 * (-200 * (a - x[0]) * (a**2 - 2*a*x[0] + b + x[0]**2 - x[1]) - a + x[0] - 1)
     dy = 200 * (-(x[0] - a)**2 - b + x[1])
     return np.array([dx, dy])
 
@@ -33,41 +33,17 @@ def get_start_point(a, b):
     return np.array([a + 2 * np.random.uniform(-1, 1), b + 2 * np.random.uniform(-1, 1)])
 
 
-def nelder_mead(x0, a, b):
-    callback = [x0]
-    print('Nelder-Mead optimization: ')
-    optim = minimize(rosenbrock, x0=x0, args=(a, b), method='Nelder-Mead', callback=callback.append)
-    print(str(optim) + '\n')
-    return np.transpose(callback)
-
-
-def powell(x0, a, b):
-    callback = [x0]
-    print('Powell optimization: ')
-    optim = minimize(rosenbrock, x0=x0, args=(a, b), method='Powell', callback=callback.append)
-    print(str(optim) + '\n')
-    return np.transpose(callback)
-
-
-def newton(x0, a, b):
+def optimize(method, x0, a, b):
     callback = [x0]
     print('Newton optimization: ')
-    optim = minimize(rosenbrock, x0=x0, args=(a, b), method='Newton-CG', jac=jacobian, hess=hess,
+    optim = minimize(rosenbrock, x0=x0, args=(a, b), method=method, jac=jacobian, hess=hess,
                      callback=callback.append)
     print(str(optim) + '\n')
     return np.transpose(callback)
 
 
-def cg(x0, a, b):
-    callback = [x0]
-    print('CG optimization: ')
-    optim = minimize(rosenbrock, x0=x0, args=(a, b), method='CG', jac=jacobian, callback=callback.append)
-    print(str(optim) + '\n')
-    return np.transpose(callback)
-
-
-def plot_optim(fun, params, start_point, method_name, filename):
-    res = fun(start_point, *params)
+def plot_optim(params, start_point, method_name, filename):
+    res = optimize(method_name, start_point, *params)
     x = np.arange(res[0, -1] - 4, res[0, -1] + 2, 0.05)
     y = np.arange(res[1, -1] - 4, res[1, -1] + 2, 0.05)
     x, y = np.meshgrid(x, y)
@@ -101,10 +77,10 @@ def main():
     for i in range(4):
         start_point = get_start_point(*params)
         print("Start point: x = {}  y = {}\n".format(start_point[0], start_point[1]))
-        plot_optim(nelder_mead, params, start_point, 'Metoda Neldera-Meada', 'nelder-mead_' + str(i))
-        plot_optim(powell, params, start_point, 'Metoda Powella', 'powell_' + str(i))
-        plot_optim(cg, params, start_point, 'Metoda gradientów sprzężonych', 'cg_' + str(i))
-        plot_optim(newton, params, start_point, 'Metoda Newtona', 'newton_' + str(i))
+        plot_optim(params, start_point, 'Nelder-Mead', 'nelder-mead_' + str(i))
+        plot_optim(params, start_point, 'Powell', 'powell_' + str(i))
+        plot_optim(params, start_point, 'CG', 'cg_' + str(i))
+        plot_optim(params, start_point, 'Newton-CG', 'newton_' + str(i))
     # plt.show(block=True)
 
 
