@@ -1,7 +1,0 @@
-\contentsline {chapter}{\numberline {1\relax .\kern .5em }Opis funkcji}{2}
-\contentsline {chapter}{\numberline {2\relax .\kern .5em }Metody optymalizacji}{4}
-\contentsline {section}{\numberline {2.1\relax .\kern .5em }Metoda Neldera-Meada}{4}
-\contentsline {section}{\numberline {2.2\relax .\kern .5em }Metoda Powella}{8}
-\contentsline {section}{\numberline {2.3\relax .\kern .5em }Metoda gradient\IeC {\'o}w sprz\IeC {\k e}\IeC {\.z}onych}{12}
-\contentsline {section}{\numberline {2.4\relax .\kern .5em }Metoda Newtona}{16}
-\contentsline {chapter}{\numberline {3\relax .\kern .5em }Statystyki}{20}
